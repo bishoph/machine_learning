@@ -11,4 +11,4 @@ tensorflow:
 
 Visuals:
 
-![Iris dataset visualized](/machine_learning/tensorflow/data/iris_data_visual.png?raw=true "Iris dataset")
+![Iris dataset visualized](https://raw.githubusercontent.com/bishoph/machine_learning/master/tensorflow/data/iris_data_visual.png "Iris dataset")
