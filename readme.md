@@ -11,4 +11,4 @@ tensorflow:
 
 Visuals:
 
-![Iris dataset visualized](machine_learning/tensorflow/data/iris_data_visual.png?raw=true "Iris dataset")
+![Iris dataset visualized](/machine_learning/tensorflow/data/iris_data_visual.png?raw=true "Iris dataset")
