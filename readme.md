@@ -6,7 +6,7 @@ tensorflow:
  Loading the dataset and also encoding the one-hot label 
  manually for better understanding. After the dataset training 
  we generate random test sets and run them to get either 
- probabilities and prediction from the learned data.
+ probabilities and predictions from the learned data.
 
 
 Visuals:
