@@ -12,3 +12,11 @@ tensorflow:
 Visuals:
 
 ![Iris dataset visualized](https://raw.githubusercontent.com/bishoph/machine_learning/master/tensorflow/data/iris_data_visual.png "Iris dataset")
+
+
+sklearn:
+
+ Simple Nearest Neighbors algorithm used in combination with the 
+ Iris dataset. Even if our dataset is small, the ball tree 
+ classification is used. We generate random test sets and get 
+ predictions based upon uniform and distance weighting.
