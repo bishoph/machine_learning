@@ -22,6 +22,9 @@ import random
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from sklearn import neighbors, datasets
+from sklearn.linear_model import SGDClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn import svm
 
 iris = datasets.load_iris()
 
@@ -30,15 +33,33 @@ y = iris.target
 
 nn = NearestNeighbors(n_neighbors=2, algorithm='ball_tree')
 n_neighbors = 15
+clf_nn = neighbors.KNeighborsClassifier(n_neighbors, weights='distance') # 'uniform' or 'distance'
+clf_nn.fit(X, y)
 
-for weight in  ['uniform', 'distance']:
-    clf = neighbors.KNeighborsClassifier(n_neighbors, weights=weight)
-    clf.fit(X, y)
-    for test_run in range(0,10):
-        sepal_length = random.uniform( 4.0, 8.0 )
-        sepal_width = random.uniform( 2.0, 5.0 )
-        petal_length = random.uniform( 1.0, 6.0 )
-        petal_width = random.uniform( 0.1, 3.0 )
-        test_arr = [sepal_length, sepal_width, petal_length, petal_width]
-        Z = clf.predict([test_arr])
-        print (weight + ' test run [' + str(test_run) +'] with a generated test set ' + str(test_arr) + ' we got: '+ str(Z))
+clf_adaboost = AdaBoostClassifier(n_estimators=100)
+clf_adaboost.fit(X, y)
+
+clf_svm = svm.SVC()
+clf_svm.fit(X, y)
+
+# building classification for test scenario
+classification = [ [ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ], [ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ], [ [ 0, 0 ], [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ] ]
+for i, c in enumerate(X):
+    t = y.item(i)
+    for a in range(0,4):
+        if (c[a] > classification[t][a][1]):
+            classification[t][a][1] = c[a]
+        if (classification[t][a][0] == 0 or classification[t][a][0] > c[a]):
+            classification[t][a][0] = c[a]
+
+for test_run in range(0,10):
+    type = random.randint(0,2)
+    sepal_length = random.uniform( classification[type][0][0], classification[type][0][1] )
+    sepal_width = random.uniform( classification[type][1][0], classification[type][1][1] )
+    petal_length = random.uniform( classification[type][2][0], classification[type][2][1] )
+    petal_width = random.uniform( classification[type][3][0], classification[type][3][1] )
+    test_arr = [sepal_length, sepal_width, petal_length, petal_width]
+    Z_nn = clf_nn.predict([test_arr])
+    Z_adaboost = clf_adaboost.predict([test_arr])
+    Z_svm = clf_svm.predict([test_arr])
+    print ('test run [' + str(test_run) +'] with  test set ' + str(test_arr) + '. should be ['+str(type)+'] and we got: '+ str(Z_nn) + ' / ' + str(Z_adaboost) + ' / ' + str(Z_svm))
