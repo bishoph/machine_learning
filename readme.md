@@ -1,4 +1,10 @@
-Machine learning test repo.
+Machine learning test repo
+
+prophet:
+
+ Forecast and prediction based on historic Bitcoin trade
+ data. Data cleanup/consolidation and removal of outliers.
+
 
 tensorflow:
 
